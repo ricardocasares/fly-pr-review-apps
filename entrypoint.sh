@@ -17,8 +17,8 @@ REPO_OWNER=$(jq -r .organization.login /github/workflow/event.json | awk '{print
 REPO_NAME=$(jq -r .repository.name /github/workflow/event.json | awk '{print tolower($0)}')
 EVENT_TYPE=$(jq -r .action /github/workflow/event.json)
 
-# Default the Fly app name to pr-{number}-{repo_owner}-{repo_name}
-app="${INPUT_NAME:-pr-$PR_NUMBER-$REPO_OWNER-$REPO_NAME}"
+# Default the Fly app name to {repo_owner}-{repo_name}-pr-{number}
+app="${INPUT_NAME:-$REPO_OWNER-$REPO_NAME-pr-$PR_NUMBER}"
 region="${INPUT_REGION:-${FLY_REGION:-iad}}"
 org="${INPUT_ORG:-${FLY_ORG:-personal}}"
 image="$INPUT_IMAGE"
