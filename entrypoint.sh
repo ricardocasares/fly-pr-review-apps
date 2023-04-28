@@ -17,10 +17,10 @@ if [ -z "$PR_NUMBER" ]; then
   exit 1
 fi
 
-REPO_OWNER=$(jq -r .event.base.repo.owner.login /github/workflow/event.json)
+REPO_OWNER=$(jq -r .organization.login | ascii_downcase /github/workflow/event.json)
 echo "REPO_OWNER = $REPO_OWNER"
 
-REPO_NAME=$(jq -r .event.base.repo.name /github/workflow/event.json)
+REPO_NAME=$(jq -r .repository.name | ascii_downcase /github/workflow/event.json)
 echo "REPO_NAME = $REPO_NAME"  
 
 EVENT_TYPE=$(jq -r .action /github/workflow/event.json)
