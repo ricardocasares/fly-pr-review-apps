@@ -2,10 +2,6 @@
 
 set -ex
 
-echo "----"
-cat /github/workflow/event.json
-echo "----"
-
 if [ -n "$INPUT_PATH" ]; then
   # Allow user to change directories in which to run Fly commands.
   cd "$INPUT_PATH" || exit
@@ -18,11 +14,7 @@ if [ -z "$PR_NUMBER" ]; then
 fi
 
 REPO_OWNER=$(jq -r .organization.login /github/workflow/event.json | awk '{print tolower($0)}')
-echo "REPO_OWNER = $REPO_OWNER"
-
 REPO_NAME=$(jq -r .repository.name /github/workflow/event.json | awk '{print tolower($0)}')
-echo "REPO_NAME = $REPO_NAME"  
-
 EVENT_TYPE=$(jq -r .action /github/workflow/event.json)
 
 # Default the Fly app name to pr-{number}-{repo_owner}-{repo_name}
@@ -60,7 +52,10 @@ if [ -n "$INPUT_POSTGRES" ]; then
 fi
 
 # Make some info available to the GitHub workflow.
-fly status --app "$app" --json >status.json
+fly status --app "$app" --json > status.json
+echo "--- status a ---"
+cat status.json
+echo "--- status b ---"
 hostname=$(jq -r .Hostname status.json)
 appid=$(jq -r .ID status.json)
 
