@@ -59,6 +59,6 @@ echo "--- status b ---"
 hostname=$(jq -r .Hostname status.json)
 appid=$(jq -r .ID status.json)
 
-echo "name=hostname::$hostname" >> $GITHUB_OUTPUT
-echo "name=url::https://$hostname" >> $GITHUB_OUTPUT
-echo "name=id::$appid" >> $GITHUB_OUTPUT
+echo "hostname::$hostname" >> $GITHUB_OUTPUT
+echo "url::https://$hostname" >> $GITHUB_OUTPUT
+echo "id::$appid" >> $GITHUB_OUTPUT
