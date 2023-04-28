@@ -2,10 +2,6 @@
 
 set -ex
 
-echo "before cat"
-cat /github/workflow/event.json
-echo "after cat"
-
 if [ -n "$INPUT_PATH" ]; then
   # Allow user to change directories in which to run Fly commands.
   cd "$INPUT_PATH" || exit
@@ -59,6 +55,7 @@ fi
 fly status --app "$app" --json >status.json
 hostname=$(jq -r .Hostname status.json)
 appid=$(jq -r .ID status.json)
-echo "::set-output name=hostname::$hostname"
-echo "::set-output name=url::https://$hostname"
-echo "::set-output name=id::$appid"
+
+echo "name=hostname::$hostname" >> $GITHUB_OUTPUT
+echo "name=url::https://$hostname" >> $GITHUB_OUTPUT
+echo "name=id::$appid" >> $GITHUB_OUTPUT
