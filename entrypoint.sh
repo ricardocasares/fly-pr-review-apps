@@ -39,6 +39,7 @@ fi
 if ! flyctl status --app "$app"; then
   flyctl launch --no-deploy --copy-config --name "$app" --image "$image" --region "$region" --org "$org"
   if [ -n "$INPUT_SECRETS" ]; then
+    echo "GOT SECRETS $INPUT_SECRETS"
     echo $INPUT_SECRETS | tr " " "\n" | flyctl secrets import --app "$app"
   fi
   flyctl deploy --app "$app" --region "$region" --image "$image" --region "$region" --strategy immediate
