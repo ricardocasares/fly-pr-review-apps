@@ -53,9 +53,6 @@ fi
 
 # Make some info available to the GitHub workflow.
 fly status --app "$app" --json > status.json
-echo "--- status a ---"
-cat status.json
-echo "--- status b ---"
 hostname=$(jq -r .Hostname status.json)
 appid=$(jq -r .ID status.json)
 
